@@ -1,19 +1,16 @@
 package me.jiho.demorestapi.event;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Builder @AllArgsConstructor @NoArgsConstructor
-@Getter @Setter @EqualsAndHashCode(of = "id")
-@Entity
-public class Event {
-    @Id
-    @GeneratedValue
-    private Long id;
+@Builder @NoArgsConstructor @AllArgsConstructor
+@Data
+public class EventDto {
     private String name;
     private String description;
     private LocalDateTime beginEnrollmentDateTime;
@@ -24,8 +21,4 @@ public class Event {
     private Integer basePrice;
     private Integer maxPrice;
     private Integer limitOfEnrollment;
-    private Boolean offline;
-    private Boolean free;
-    @Enumerated(value = EnumType.STRING)
-    private EventStatus eventStatus;
 }
