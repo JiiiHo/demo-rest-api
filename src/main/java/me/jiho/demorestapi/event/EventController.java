@@ -24,9 +24,12 @@ public class EventController {
 
     private final ModelMapper modelMapper;
 
-    public EventController(EventRepository eventRepository, ModelMapper modelMapper) {
+    private final EventValidator eventValidator;
+
+    public EventController(EventRepository eventRepository, ModelMapper modelMapper, EventValidator eventValidator) {
         this.eventRepository = eventRepository;
         this.modelMapper = modelMapper;
+        this.eventValidator = eventValidator;
     }
 
     @PostMapping
@@ -34,6 +37,13 @@ public class EventController {
         if (errors.hasErrors()) {
             return ResponseEntity.badRequest().build();
         }
+
+        eventValidator.validate(eventDto, errors);
+
+        if (errors.hasErrors()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         // eventDto 객체를 event 객체로 매핑 해주는 ModelMapper 아니면 빌더로 하기
         Event event = modelMapper.map(eventDto, Event.class);
         Event event1 = this.eventRepository.save(event);
