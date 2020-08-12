@@ -39,6 +39,7 @@ public class EventControllerTests {
 
 
     @Test
+    @DisplayName("정상적으로 이벤트를 생성하는 이벤트")
     public void createEvent() throws Exception {
         EventDto event = EventDto.builder()
                 .name("Spring")
@@ -60,9 +61,9 @@ public class EventControllerTests {
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").exists())
-                .andExpect(jsonPath("id").value(Matchers.not(10l)))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
+                .andExpect(jsonPath("free").value(false))
                 .andExpect(header().exists("Location"))
+                .andExpect(jsonPath("offline").value(true))
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, "application/hal+json"));
 
     }

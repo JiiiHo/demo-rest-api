@@ -24,8 +24,23 @@ public class Event {
     private Integer basePrice;
     private Integer maxPrice;
     private Integer limitOfEnrollment;
-    private Boolean offline;
-    private Boolean free;
+    private boolean offline;
+    private boolean free;
     @Enumerated(value = EnumType.STRING)
     private EventStatus eventStatus;
+
+    public void update() {
+        // Update Free
+        if (this.basePrice == 0 && this.maxPrice == 0) {
+            this.free = true;
+        } else {
+            this.free = false;
+        }
+
+        if (this.location == null || this.location.isBlank()) {
+            this.offline = false;
+        } else {
+            this.offline = true;
+        }
+    }
 }
