@@ -2,6 +2,7 @@ package me.jiho.demorestapi.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -67,6 +68,7 @@ public class EventControllerTests {
     }
 
     @Test
+    @DisplayName("잘못된 필드에 입력값 준경우에 에러가 발생하는 테스트")
     public void createEvent_Bad_Request() throws Exception {
         Event event = Event.builder()
                 .name("Spring")
@@ -93,6 +95,7 @@ public class EventControllerTests {
     }
 
     @Test
+    @DisplayName("입력값이 비어있는 경우에 에러가 발생하는 테스트")
     public void createEvent_Bad_Request_Empty_Input() throws Exception {
         EventDto eventDto = EventDto.builder().build();
 
@@ -103,6 +106,7 @@ public class EventControllerTests {
     }
 
     @Test
+    @DisplayName("입력값이 잘못된 경우에 애러가 발생하는 테스트")
     public void createEvent_Bad_Request_Wrong_Input() throws Exception {
         EventDto event = EventDto.builder()
                 .name("Spring")
