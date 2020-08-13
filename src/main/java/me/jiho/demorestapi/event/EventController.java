@@ -3,6 +3,8 @@ package me.jiho.demorestapi.event;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -49,8 +51,12 @@ public class EventController {
         Event event = modelMapper.map(eventDto, Event.class);
         event.update();
         Event event1 = this.eventRepository.save(event);
-        URI createdUri = linkTo(EventController.class).slash(event1.getId()).toUri();
+        WebMvcLinkBuilder selfLinkBUilder = linkTo(EventController.class).slash(event1.getId());
+        URI createdUri = selfLinkBUilder.toUri();
         event.setId(10l);
-        return ResponseEntity.created(createdUri).body(event);
+        EventResource eventResource = new EventResource(event);
+        eventResource.add(linkTo(EventController.class).withRel("query-events"));
+        eventResource.add(selfLinkBUilder.withRel("update-event"));
+        return ResponseEntity.created(createdUri).body(eventResource);
     }
 }
