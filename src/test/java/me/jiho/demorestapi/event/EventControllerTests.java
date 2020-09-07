@@ -79,11 +79,15 @@ public class EventControllerTests {
                 .andExpect(jsonPath("_links.self").exists())
                 .andExpect(jsonPath("_links.query-events").exists())
                 .andExpect(jsonPath("_links.update-event").exists())
+                .andExpect(jsonPath("_links.profile").exists())
                 .andDo(document("create-event",
                         links(
                                 linkWithRel("self").description("link to self"),
                                 linkWithRel("query-events").description("link to query events"),
-                                linkWithRel("update-event").description("link to update an existing event")),
+                                linkWithRel("update-event").description("link to update an existing event"),
+                                linkWithRel("profile").description("link to profile")
+
+                        ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("aceept header"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("content type")
@@ -121,7 +125,8 @@ public class EventControllerTests {
                                 fieldWithPath("eventStatus").description("event status"),
                                 fieldWithPath("_links.self.href").description("link to self"),
                                 fieldWithPath("_links.query-events.href").description("link to query events"),
-                                fieldWithPath("_links.update-event.href").description("link to update event")
+                                fieldWithPath("_links.update-event.href").description("link to update event"),
+                                fieldWithPath("_links.profile.href").description("link to profile")
 
                                 )
                 ));
@@ -193,4 +198,5 @@ public class EventControllerTests {
                 .andExpect(jsonPath("$[0].code").exists())
                 .andExpect(jsonPath("$[0].rejectedValue").exists());
     }
+
 }
