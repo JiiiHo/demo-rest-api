@@ -51,12 +51,12 @@ public class EventController {
         Event event = modelMapper.map(eventDto, Event.class);
         event.update();
         Event event1 = this.eventRepository.save(event);
-        WebMvcLinkBuilder selfLinkBUilder = linkTo(EventController.class).slash(event1.getId());
-        URI createdUri = selfLinkBUilder.toUri();
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(EventController.class).slash(event1.getId());
+        URI createdUri = selfLinkBuilder.toUri();
         event.setId(10l);
         EventResource eventResource = new EventResource(event);
         eventResource.add(linkTo(EventController.class).withRel("query-events"));
-        eventResource.add(selfLinkBUilder.withRel("update-event"));
+        eventResource.add(selfLinkBuilder.withRel("update-event"));
         return ResponseEntity.created(createdUri).body(eventResource);
     }
 }
