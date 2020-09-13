@@ -1,6 +1,7 @@
 package me.jiho.demorestapi.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.jiho.demorestapi.common.BaseControllerTest;
 import me.jiho.demorestapi.common.RestDocsConfiguration;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -35,28 +36,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureRestDocs
-//slicetest가 아닌 SpringBootTest로 실제 테스트 진
-@Import(RestDocsConfiguration.class)
-@ActiveProfiles("test")
-public class EventControllerTests {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
+public class EventControllerTests extends BaseControllerTest {
 
     @Autowired
     EventRepository eventRepository;
-
-    @Autowired
-    ModelMapper modelMapper;
-
-
 
     @Test
     @DisplayName("정상적으로 이벤트를 생성하는 이벤트")
