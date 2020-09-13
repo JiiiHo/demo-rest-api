@@ -14,6 +14,7 @@ import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,36 @@ public class EventController {
         eventResource.add(Link.of("/docs/index.html#resources-events-get").withRel("profile"));
 
         return ResponseEntity.ok(eventResource);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateEvent(@PathVariable Long id,
+                                      @RequestBody @Valid EventDto eventDto,
+                                      Errors errors) {
+        Optional<Event> optionalEvent = this.eventRepository.findById(id);
+        if (optionalEvent.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
+
+        //비지니스 로직에 맞는지 확인
+        this.eventValidator.validate(eventDto, errors);
+
+        if (errors.hasErrors()) {
+            return badRequest(errors);
+        }
+
+        Event existEvent = optionalEvent.get();
+        this.modelMapper.map(eventDto, existEvent);
+        Event savedEvent = this.eventRepository.save(existEvent);
+
+        EventResource eventResource = new EventResource(savedEvent);
+        eventResource.add(Link.of("/docs/index.html#resources-events-update").withRel("profile"));
+
+        return ResponseEntity.ok(eventResource);
+
     }
 
     private ResponseEntity<ErrorsResource> badRequest(Errors errors) {
