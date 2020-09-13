@@ -1,6 +1,7 @@
 package me.jiho.demorestapi.event;
 
 import lombok.*;
+import me.jiho.demorestapi.Accounts.Account;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -28,6 +29,9 @@ public class Event {
     private boolean free;
     @Enumerated(value = EnumType.STRING)
     private EventStatus eventStatus;
+
+    @ManyToOne
+    private Account manager;
 
     public void update() {
         // Update Free
