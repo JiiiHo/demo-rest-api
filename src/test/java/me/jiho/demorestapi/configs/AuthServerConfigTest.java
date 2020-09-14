@@ -27,7 +27,7 @@ class AuthServerConfigTest extends BaseControllerTest {
     public void getAuthToken() throws Exception {
 
         //Given
-        String email = "jiho@email.com";
+        String email = "jiho2@email.com";
         String password = "jiho";
         Account jiho = Account.builder()
                 .email(email)
@@ -37,7 +37,7 @@ class AuthServerConfigTest extends BaseControllerTest {
         this.accountService.saveAccount(jiho);
 
 
-        String clientId = "myapp";
+        String clientId = "myApp";
         String clientSecret = "pass";
         this.mockMvc.perform(post("/oauth/token")
                 .with(httpBasic(clientId, clientSecret))
