@@ -1,4 +1,4 @@
-package me.jiho.demorestapi.Accounts;
+package me.jiho.demorestapi.accounts;
 
 public enum AccountRole {
     ADMIN, USER

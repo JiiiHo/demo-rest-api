@@ -12,4 +12,7 @@ public class EventResource extends EntityModel<Event> {
         super(event, links);
         add(linkTo(EventController.class).slash(event.getId()).withSelfRel());
     }
+
+
+
 }

@@ -1,11 +1,9 @@
 package me.jiho.demorestapi.event;
 
 import lombok.*;
-import me.jiho.demorestapi.Accounts.Account;
+import me.jiho.demorestapi.accounts.Account;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
