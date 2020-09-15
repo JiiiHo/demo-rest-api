@@ -1,7 +1,9 @@
 package me.jiho.demorestapi.event;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import me.jiho.demorestapi.accounts.Account;
+import me.jiho.demorestapi.accounts.AccountSerializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +31,7 @@ public class Event {
     private EventStatus eventStatus;
 
     @ManyToOne
+    @JsonSerialize(using = AccountSerializer.class)
     private Account manager;
 
     public void update() {
