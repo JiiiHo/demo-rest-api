@@ -7,6 +7,7 @@ import me.jiho.demorestapi.accounts.AccountRole;
 import me.jiho.demorestapi.accounts.AccountService;
 import me.jiho.demorestapi.common.BaseControllerTest;
 import me.jiho.demorestapi.common.RestDocsConfiguration;
+import me.jiho.demorestapi.configs.AppProperties;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,6 +60,9 @@ public class EventControllerTests extends BaseControllerTest {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    AppProperties appProperties;
 
     @BeforeEach
     public void setUP() throws Exception {
@@ -171,8 +175,8 @@ public class EventControllerTests extends BaseControllerTest {
         this.accountService.saveAccount(jiho);
 
 
-        String clientId = "myApp";
-        String clientSecret = "pass";
+        String clientId = appProperties.getClientId();
+        String clientSecret = appProperties.getClientSecret();
         ResultActions perform = this.mockMvc.perform(post("/oauth/token")
                 .with(httpBasic(clientId, clientSecret))
                 .param("username", email)
